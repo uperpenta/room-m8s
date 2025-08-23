@@ -1,7 +1,11 @@
+import { SharedBox } from "../_components/dashboard/SharedBox"
+
 export default async function Dashboard() {
   return (
     <main>
-      <h1>Dashboard</h1>
+      <div className="flex justify-between flex-row">
+      <SharedBox/>
+      </div>
     </main>
   );
 }
