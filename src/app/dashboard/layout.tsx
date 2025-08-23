@@ -1,8 +1,11 @@
+import { auth } from "~/server/auth";
 import Footer from "../_components/dashboard/Footer";
 import { TopNav } from "../_components/dashboard/TopNav";
 
 async function getUser() {
-  return { name: "John Doe" }; //add user logic to prefetch data : await auth()
+  const session = await auth();
+
+  return session?.user;
 }
 
 export default async function DashboardLayout({
@@ -12,10 +15,12 @@ export default async function DashboardLayout({
 }) {
   const user = await getUser();
 
+  if (!user?.name) return <p>You must be logged in to view this page</p>;
+
   return (
     <>
       <div className="flex min-h-screen flex-col">
-        <TopNav user={user} />
+        <TopNav user={{ name: user.name }} />
         <div className="flex-1 p-6">
           <main>{children}</main>
         </div>
