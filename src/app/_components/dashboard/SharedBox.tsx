@@ -8,7 +8,7 @@ export function SharedBox() {
   const [selectedTab, setSelectedTab] = useState("messages");
 
   return (
-    <div className="bg-blue-300 border-amber-50 p-4 w-64 h-120 rounded-lg shadow">
+    <div className="bg-blue-300 border-amber-50 p-4 w-64 h-140 rounded-lg shadow">
       <div className="flex justify-between">
         <button
           className="cursor-pointer hover:bg-gray-200"
