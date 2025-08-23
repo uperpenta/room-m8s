@@ -1,5 +1,7 @@
-export default async function Dashboard(){
-    return(
-        <h1>Dashboard</h1>
-    )
+export default async function Dashboard() {
+  return (
+    <main>
+      <h1>Dashboard</h1>
+    </main>
+  );
 }
