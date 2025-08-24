@@ -20,13 +20,16 @@ export default async function DashboardLayout({
   return (
     <>
       <div className="flex min-h-screen flex-col">
+        {/* Header */}
         <TopNav user={{ name: user.name }} />
-        <div className="flex-1 p-6">
-          <main>{children}</main>
+
+        {/* Content (Sidebar + Main) */}
+        <div className="flex flex-1">
+          {children}
         </div>
-        <div>
-          <Footer />
-        </div>
+
+        {/* Footer */}
+        <Footer />
       </div>
     </>
   );

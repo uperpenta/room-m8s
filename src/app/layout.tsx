@@ -6,8 +6,8 @@ import { Geist } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 
 export const metadata: Metadata = {
-  title: "Room-m8s",
-  description: "Room-m8s match app for finding your ideal roommate!",
+  title: "Room-M8s",
+  description: "Room-M8s match app for finding your ideal roommate!",
 };
 
 const geist = Geist({
