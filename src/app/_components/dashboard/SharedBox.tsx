@@ -8,8 +8,8 @@ export function SharedBox() {
   const [selectedTab, setSelectedTab] = useState("messages");
 
   return (
-    <aside className="bg-bluey left-0 flex h-full w-64 flex-col ps-3 pe-3 ">
-      <div className="mb-4 flex justify-between">
+    <aside className="bg-bluey relative left-0 flex h-full w-80 flex-col ps-3 pe-3">
+      <div className="mb-4 flex justify-between ">
         <button
           className={`rounded-lg px-2 py-2 font-medium transition-colors duration-200 ${
             selectedTab === "messages"

@@ -4,7 +4,7 @@ export default async function Dashboard() {
   return (
     <div className="flex flex-1">
       {/* Sidebar */}
-      <aside className="w-64 shrink-0 border-r">
+      <aside className="shrink-0">
         <SharedBox />
       </aside>
 
