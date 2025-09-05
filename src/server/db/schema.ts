@@ -1,5 +1,10 @@
 import { relations, sql } from "drizzle-orm";
-import { index, pgTableCreator, primaryKey } from "drizzle-orm/pg-core";
+import {
+  index,
+  pgTableCreator,
+  primaryKey,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
 /**
@@ -10,35 +15,41 @@ import { type AdapterAccount } from "next-auth/adapters";
  */
 export const createTable = pgTableCreator((name) => `room-m8s_${name}`);
 
-export const conversations = createTable("conversation", (d) => ({
-  id: d
-    .varchar({ length: 255 })
-    .notNull()
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  userAId: d.varchar({ length: 255 }).notNull(),
-  userBId: d.varchar({ length: 255 }).notNull(),
-  createdAt: d
-    .timestamp({ withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
-}));
+export const conversations = createTable(
+  "conversation",
+  (d) => ({
+    id: d
+      .varchar({ length: 255 })
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userAId: d.varchar({ length: 255 }).notNull(),
+    userBId: d.varchar({ length: 255 }).notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+  }),
+  (table) => ({
+    uniquePair: uniqueIndex("unique_conversation_pair").on(
+      table.userAId,
+      table.userBId,
+    ),
+    userAIdx: uniqueIndex("idx_conversation_userA").on(table.userAId),
+    userBIdx: uniqueIndex("idx_conversation_userB").on(table.userBId),
+  }),
+);
 
 export const likes = createTable("like", (d) => ({
   id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-  likerId: d
-    .varchar({ length: 255 })
-    .notNull(),
-  likedId: d
-    .varchar({ length: 255 })
-    .notNull(),
+  likerId: d.varchar({ length: 255 }).notNull(),
+  likedId: d.varchar({ length: 255 }).notNull(),
   createdAt: d
     .timestamp({ withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
 }));
-
 
 export const messages = createTable("message", (d) => ({
   id: d.integer().primaryKey().generatedByDefaultAsIdentity(),

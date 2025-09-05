@@ -1,10 +1,6 @@
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { likes, conversations } from "~/server/db/schema";
 
 export const matchRouter = createTRPCRouter({
@@ -24,8 +20,8 @@ export const matchRouter = createTRPCRouter({
       });
 
       if (mutual) {
-        const [userAId, userBId] = 
-            currentUserId < input.id
+        const [userAId, userBId] =
+          currentUserId < input.id
             ? [currentUserId, input.id]
             : [input.id, currentUserId];
 
@@ -34,7 +30,5 @@ export const matchRouter = createTRPCRouter({
           userBId,
         });
       }
-
-      
     }),
 });
