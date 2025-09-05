@@ -1,6 +1,6 @@
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { z } from "zod";
-import { conversations, likes } from "~/server/db/schema";
+import { conversations } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 
 export const conversationRouter = createTRPCRouter({

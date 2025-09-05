@@ -41,15 +41,22 @@ export const conversations = createTable(
   }),
 );
 
-export const likes = createTable("like", (d) => ({
-  id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-  likerId: d.varchar({ length: 255 }).notNull(),
-  likedId: d.varchar({ length: 255 }).notNull(),
-  createdAt: d
-    .timestamp({ withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-}));
+export const likes = createTable(
+  "like",
+  (d) => ({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+    likerId: d.varchar({ length: 255 }).notNull(),
+    likedId: d.varchar({ length: 255 }).notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  }),
+  (table) => ({
+    uniquePair: uniqueIndex("unique_like_pair").on(table.likerId, table.likedId),
+    likerLikedIdx: uniqueIndex("idx_like_likerLiked").on(table.likerId, table.likedId),
+  }),
+);
 
 export const messages = createTable("message", (d) => ({
   id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
