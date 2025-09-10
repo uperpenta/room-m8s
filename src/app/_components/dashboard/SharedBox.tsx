@@ -9,9 +9,9 @@ export function SharedBox() {
 
   return (
     <aside className="bg-bluey relative left-0 flex h-full w-80 flex-col ps-3 pe-3">
-      <div className="mb-4 flex justify-between ">
+      <div className="mb-4 flex space-x-4">
         <button
-          className={`rounded-lg px-2 py-2 font-medium transition-colors duration-200 ${
+          className={`flex-1 rounded-lg px-2 py-2 font-medium transition-colors duration-200 ${
             selectedTab === "messages"
               ? "bg-marina text-white"
               : "hover:bg-marina cursor-pointer bg-white text-black hover:text-white"
@@ -21,7 +21,7 @@ export function SharedBox() {
           Messages
         </button>
         <button
-          className={`rounded-lg px-2 py-2 font-medium transition-colors duration-200 ${
+          className={`flex-1 rounded-lg px-2 py-2 font-medium transition-colors duration-200 ${
             selectedTab === "preferences"
               ? "bg-marina text-white"
               : "hover:bg-marina cursor-pointer bg-white text-black hover:text-white"
