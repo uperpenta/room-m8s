@@ -5,7 +5,7 @@ import {
   primaryKey,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
-import { type AdapterAccount } from "next-auth/adapters";
+import type { AdapterAccount } from "next-auth/adapters";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -31,13 +31,13 @@ export const conversations = createTable(
       .notNull(),
     updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
   }),
-  (table) => ({
+  (t) => ({
     uniquePair: uniqueIndex("unique_conversation_pair").on(
-      table.userAId,
-      table.userBId,
+      t.userAId,
+      t.userBId,
     ),
-    userAIdx: uniqueIndex("idx_conversation_userA").on(table.userAId),
-    userBIdx: uniqueIndex("idx_conversation_userB").on(table.userBId),
+    userAIdx: uniqueIndex("idx_conversation_userA").on(t.userAId),
+    userBIdx: uniqueIndex("idx_conversation_userB").on(t.userBId),
   }),
 );
 
@@ -52,10 +52,11 @@ export const likes = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   }),
-  (table) => ({
-    uniquePair: uniqueIndex("unique_like_pair").on(table.likerId, table.likedId),
-    likerLikedIdx: uniqueIndex("idx_like_likerLiked").on(table.likerId, table.likedId),
-  }),
+  (t) => [
+    uniqueIndex("unique_like_pair").on(t.likerId, t.likedId), 
+    index("liker_idx").on(t.likerId), 
+    index("liked_idx").on(t.likedId), 
+  ],
 );
 
 export const messages = createTable("message", (d) => ({

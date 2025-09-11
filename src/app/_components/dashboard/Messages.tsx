@@ -17,7 +17,7 @@ export function Messages() {
 
   return (
     <main>
-      <ul>
+      <ul className="flex flex-col gap-2">
         {messages.map((msg) => (
           <li key={msg.id} className="rounded-lg border bg-white p-3">
             <p>
