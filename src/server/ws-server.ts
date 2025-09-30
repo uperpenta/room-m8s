@@ -1,5 +1,4 @@
 import "dotenv/config";
-import {env} from "~/env"
 
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import { WebSocketServer } from "ws";

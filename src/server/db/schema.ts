@@ -31,14 +31,11 @@ export const conversations = createTable(
       .notNull(),
     updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
   }),
-  (t) => ({
-    uniquePair: uniqueIndex("unique_conversation_pair").on(
-      t.userAId,
-      t.userBId,
-    ),
-    userAIdx: uniqueIndex("idx_conversation_userA").on(t.userAId),
-    userBIdx: uniqueIndex("idx_conversation_userB").on(t.userBId),
-  }),
+  (t) => [
+    uniqueIndex("unique_conversation_pair").on(t.userAId, t.userBId),
+    uniqueIndex("idx_conversation_userA").on(t.userAId),
+    uniqueIndex("idx_conversation_userB").on(t.userBId),
+  ],
 );
 
 export const likes = createTable(
@@ -53,9 +50,9 @@ export const likes = createTable(
       .notNull(),
   }),
   (t) => [
-    uniqueIndex("unique_like_pair").on(t.likerId, t.likedId), 
-    index("liker_idx").on(t.likerId), 
-    index("liked_idx").on(t.likedId), 
+    uniqueIndex("unique_like_pair").on(t.likerId, t.likedId),
+    index("liker_idx").on(t.likerId),
+    index("liked_idx").on(t.likedId),
   ],
 );
 
