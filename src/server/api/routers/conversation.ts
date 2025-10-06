@@ -2,6 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { conversations } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
+import { logger } from "~/server/logger/logger";
 
 export const conversationRouter = createTRPCRouter({
   getOwnConversations: protectedProcedure.query(async ({ ctx }) => {
@@ -18,5 +19,9 @@ export const conversationRouter = createTRPCRouter({
     .input(z.object({ id: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.delete(conversations).where(eq(conversations.id, input.id));
+
+      logger.info("Conversation deleted", {
+        conversationId: input.id,
+      });
     }),
 });

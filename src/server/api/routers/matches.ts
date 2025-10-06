@@ -1,7 +1,7 @@
 import { z } from "zod";
-
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { likes, conversations } from "~/server/db/schema";
+import { logger } from "~/server/logger/logger";
 
 export const matchRouter = createTRPCRouter({
   likeUser: protectedProcedure
@@ -28,6 +28,16 @@ export const matchRouter = createTRPCRouter({
         await ctx.db.insert(conversations).values({
           userAId,
           userBId,
+        });
+
+        logger.info("Conversation created between matched users", {
+          userAId,
+          userBId,
+        });
+      } else {
+        logger.info("User already liked", {
+          likerId: ctx.session.user.id,
+          likedId: input.id,
         });
       }
     }),

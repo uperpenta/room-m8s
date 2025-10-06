@@ -38,6 +38,23 @@ export const conversations = createTable(
   ],
 );
 
+export const userPreferences = createTable(
+  "user_preference",
+  (d) => ({
+    id: d
+      .varchar({ length: 255 })
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: d.varchar({ length: 255 }).notNull(),
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+  })
+)
+
 export const likes = createTable(
   "like",
   (d) => ({
